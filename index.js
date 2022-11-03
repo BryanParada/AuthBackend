@@ -9,8 +9,11 @@ require('dotenv').config();
 //crear el servidor/aplicacion de express
 const app = express();
 //const port = 4000;
-
+ 
 //---middlewares
+
+//Directorio publico
+app.use( express.static('public'))
 
 //CORS
 app.use( cors() );
