@@ -8,14 +8,20 @@ const router = Router();
 //controladores de ruta
 
 //Crear nuevo usuario 
-router.post( '/new', createUser); //<- mandando como referencia 
+router.post( '/new',
+[
+check('email', 'Email is required').isEmail(),
+check('name', 'Name is required').not().isEmpty(),
+check('password', 'Password must be at least 6 characters').isLength({ min: 6})
+],
+ createUser); //<- mandando como referencia 
 
 //Login usuario 
 //          ruta,   
 router.post( '/', [
 //middleware
 check('email', 'Email is required').isEmail(),
-check('password', 'Password must be at least 6 characters').isLength({ min: 6}),
+check('password', 'Password must be at least 6 characters').isLength({ min: 6})
 
 ] , loginUser);//controlador ruta
 
