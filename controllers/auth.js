@@ -109,9 +109,15 @@ const loginUser = async(req, res = response) => {
 
 // Validar y revalidar token
 const renewToken = (req, res = response) => {
+
+  const {uid, name} = req;
+  
+
   return res.json({
     ok: true,
-    msg: "Renew /",
+    msg: "Renew /" ,
+    uid,
+    name
   });
 };
 
