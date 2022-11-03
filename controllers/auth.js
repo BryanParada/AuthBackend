@@ -108,16 +108,26 @@ const loginUser = async(req, res = response) => {
 };
 
 // Validar y revalidar token
-const renewToken = (req, res = response) => {
+const renewToken = async(req, res = response) => {
 
   const {uid, name} = req;
+  // Generar JWT
+  //Esto es para aumentar el tiempo que el usuario va a poder estar 
+  //logueado en la app, ya que el nuevo token tiene todo el tiempo
+  //especificado antes de que caduque, mientras que el anterior le queda menos.
+
+  //A un token ya generado no podemos modificarle el tiempo de expiración, 
+  //es por eso que se crea uno nuevo.
+
   
+  const token = await generateJWT(uid, name);
 
   return res.json({
     ok: true,
     msg: "Renew /" ,
     uid,
-    name
+    name,
+    token
   });
 };
 
