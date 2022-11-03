@@ -1,8 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 
 //crear el servidor/aplicacion de express
 const app = express();
 const port = 4000;
+
+//---middlewares
+
+//CORS
+app.use( cors() );
+
+// Lectura y parseo del body
+app.use( express.json())
 
 // Rutas
 app.use( '/api/auth', require('./routes/auth'));
