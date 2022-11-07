@@ -40,6 +40,7 @@ const createUser = async(req, res = response) => {
       ok: true,
       uid: dbUser.id,
       name, 
+      email,
       token
     });
 
@@ -90,6 +91,7 @@ const loginUser = async(req, res = response) => {
       ok: true,
       uid: dbUser.id,
       name: dbUser.name,
+      email: dbUser.email,
       token
 
     })
@@ -110,7 +112,12 @@ const loginUser = async(req, res = response) => {
 // Validar y revalidar token
 const renewToken = async(req, res = response) => {
 
-  const {uid, name} = req;
+  const {uid} = req;
+
+  //leer la base de datos par obtener email
+  const dbUser = await User.findById(uid)
+
+
   // Generar JWT
   //Esto es para aumentar el tiempo que el usuario va a poder estar 
   //logueado en la app, ya que el nuevo token tiene todo el tiempo
@@ -120,13 +127,14 @@ const renewToken = async(req, res = response) => {
   //es por eso que se crea uno nuevo.
 
   
-  const token = await generateJWT(uid, name);
+  const token = await generateJWT(uid, dbUser.name);
 
   return res.json({
     ok: true,
     msg: "Renew /" ,
     uid,
-    name,
+    name: dbUser.name, 
+    email: dbUser.email,
     token
   });
 };
